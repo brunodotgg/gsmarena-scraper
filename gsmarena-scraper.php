@@ -81,7 +81,8 @@ function extractDeviceInfo($html, $url) {
         'url' => $url,
         'brand' => '',
         'model' => '',
-        'serial_code' => ''
+        'serial_code' => '',
+        'misc_model' => ''  // Add specific field for MISC model
     ];
     
     // Extract title which usually contains brand and model
@@ -113,6 +114,8 @@ function extractDeviceInfo($html, $url) {
             // Extract first model code (usually separated by comma)
             $models = explode(',', $modelText);
             $info['serial_code'] = trim($models[0]);
+            $info['misc_model'] = trim($models[0]);  // Store in misc_model field as well
+            echo "  - Found model in MISC section: " . $info['misc_model'] . "\n";
         }
     }
     
@@ -192,5 +195,18 @@ foreach ($deviceUrls as $index => $deviceUrl) {
 echo "\n\nResults:\n";
 echo "========\n\n";
 
-// var_dump the final array
+// Display results in a more readable format
+foreach ($devices as $index => $device) {
+    echo "Device " . ($index + 1) . ":\n";
+    echo "  Brand: " . $device['brand'] . "\n";
+    echo "  Model: " . $device['model'] . "\n";
+    echo "  MISC Model: " . ($device['misc_model'] ?: 'Not found') . "\n";
+    echo "  Serial Code: " . ($device['serial_code'] ?: 'Not found') . "\n";
+    echo "  URL: " . $device['url'] . "\n";
+    echo "  ---\n\n";
+}
+
+// Also output as PHP array for programmatic use
+echo "\n\nPHP Array Output:\n";
+echo "=================\n";
 var_dump($devices);
