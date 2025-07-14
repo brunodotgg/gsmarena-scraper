@@ -166,8 +166,8 @@ $deviceUrls = extractDeviceUrls($mainHtml);
 
 echo "Found " . count($deviceUrls) . " devices.\n\n";
 
-// Limit to first 20 devices (increase from 10 to get more data)
-$deviceUrls = array_slice($deviceUrls, 0, 20);
+// Process all devices without limit
+// $deviceUrls = array_slice($deviceUrls, 0, 20);
 
 // Array to store all device information
 $devices = [];
